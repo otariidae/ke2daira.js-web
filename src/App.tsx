@@ -3,7 +3,7 @@ import useKe2daira from "./useKe2daira";
 
 const App: FC = () => {
   const [input, setInput] = useState<string>("");
-  const { data: ke2dairanized } = useKe2daira(input);
+  const ke2dairanized = useKe2daira(input);
   return (
     <Fragment>
       <style>{`
