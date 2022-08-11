@@ -30,9 +30,9 @@
     "webpack-dev-server": "^4.10.0"
   },
   "scripts": {
-    "clean": "rm -rf public",
+    "clean": "rm -rf dist",
     "prebuild": "npm run clean",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "dev": "webpack-dev-server",
     "test": "jest",
     "lint": "run-p lint:*",
