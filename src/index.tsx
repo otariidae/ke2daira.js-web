@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 
 // Global augmentation
@@ -16,4 +16,7 @@ window.kuromojin = {
   dicPath: "./dict",
 };
 
-render(<App />, document.getElementById("app"));
+const appRootDomNode = document.getElementById("app");
+if (appRootDomNode !== null) {
+  createRoot(appRootDomNode).render(<App />);
+}
