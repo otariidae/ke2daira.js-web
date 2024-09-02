@@ -3,6 +3,9 @@ import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill";
 
 export default defineConfig({
   plugins: [pluginNodePolyfill()],
+  output: {
+    assetPrefix: "./",
+  },
   tools: {
     rspack: {
       plugins: [
