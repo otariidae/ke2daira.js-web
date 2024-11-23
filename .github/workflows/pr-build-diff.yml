@@ -84,18 +84,18 @@ jobs:
       # Step 3: Compare artifacts
       - name: Compare PR and main builds
         run: |
-          diff -rq ./pr-build ./master-build > diff-output.txt || true
+          diff -rq ./pr-build ./main-build > diff-output.txt || true
 
       # Step 4: Add job summary
       - name: Add job summary
         run: |
           if [ -s diff-output.txt ]; then
             echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
-            echo "Differences detected between PR and master build artifacts:" >> $GITHUB_STEP_SUMMARY
+            echo "Differences detected between PR and main build artifacts:" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
             cat diff-output.txt >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           else
             echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
-            echo "No differences detected between PR and master build artifacts." >> $GITHUB_STEP_SUMMARY
+            echo "No differences detected between PR and main build artifacts." >> $GITHUB_STEP_SUMMARY
           fi
