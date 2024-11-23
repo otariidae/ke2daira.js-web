@@ -98,3 +98,4 @@ jobs:
           else
             echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
             echo "No differences detected between PR and master build artifacts." >> $GITHUB_STEP_SUMMARY
+          fi
