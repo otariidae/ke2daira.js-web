@@ -1,0 +1,101 @@
+name: Compare Build Artifacts
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - package-lock.json
+
+jobs:
+  build-pr:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }}
+
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: npm install
+
+      - run: npm run build
+
+      # Step 4: Upload PR artifacts
+      - name: Save PR artifacts
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-artifacts
+          path: ./dist
+
+  build-main:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }}
+
+    steps:
+      - name: Checkout main code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: npm install
+
+      - run: npm run build
+
+      # Step 4: Upload main artifacts
+      - name: Save main artifacts
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-artifacts
+          path: ./dist
+
+  compare-artifacts:
+    runs-on: ubuntu-latest
+    needs: [build-pr, build-main]
+
+    steps:
+      # Step 1: Download PR artifacts
+      - name: Download PR artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-artifacts
+          path: ./pr-build
+
+      # Step 2: Download main artifacts
+      - name: Download main artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: main-artifacts
+          path: ./main-build
+
+      # Step 3: Compare artifacts
+      - name: Compare PR and main builds
+        run: |
+          diff -rq ./pr-build ./main-build > diff-output.txt || true
+
+      # Step 4: Add job summary
+      - name: Add job summary
+        run: |
+          if [ -s diff-output.txt ]; then
+            echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
+            echo "Differences detected between PR and main build artifacts:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat diff-output.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
+            echo "No differences detected between PR and main build artifacts." >> $GITHUB_STEP_SUMMARY
+          fi
