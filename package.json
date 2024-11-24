@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^1.0.1-rc.0",
-    "@rsbuild/plugin-node-polyfill": "^1.0.4",
+    "@rsbuild/plugin-node-polyfill": "^1.2.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.5.14",
