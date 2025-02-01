@@ -8,7 +8,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.1.7",
+    "@rsbuild/core": "^1.2.3",
     "@rsbuild/plugin-node-polyfill": "^1.2.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
