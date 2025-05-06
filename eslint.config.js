@@ -1,7 +1,7 @@
 const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const reactRecommended = require("eslint-plugin-react/configs/recommended");
-const eslintConfigPrettier = require("eslint-config-prettier");
+const eslintConfigPrettier = require("eslint-config-prettier/flat");
 const globals = require("globals");
 
 module.exports = tseslint.config(
