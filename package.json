@@ -13,7 +13,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/jest": "^29.5.14",
-    "@types/react-dom": "^19.1.5",
+    "@types/react-dom": "^19.1.6",
     "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-react": "^7.37.5",
