@@ -1,6 +1,7 @@
 const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const reactRecommended = require("eslint-plugin-react/configs/recommended");
+const testingLibrary = require("eslint-plugin-testing-library");
 const eslintConfigPrettier = require("eslint-config-prettier/flat");
 const globals = require("globals");
 
@@ -20,6 +21,10 @@ module.exports = tseslint.config(
       "@typescript-eslint/no-var-requires": "off",
       "@typescript-eslint/no-require-imports": "off",
     },
+  },
+  {
+    files: ["**/*.test.{ts,tsx}"],
+    ...testingLibrary.configs["flat/react"],
   },
   eslintConfigPrettier,
 );
