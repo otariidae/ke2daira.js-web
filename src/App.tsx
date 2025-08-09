@@ -41,9 +41,8 @@ const App: FC = () => {
         onChange={(e) => {
           setInput(e.target.value);
         }}
-        data-testid="name-input"
       />
-      <output data-testid="ke2daira-output">{ke2dairanized}</output>
+      <output>{ke2dairanized}</output>
     </Fragment>
   );
 };
