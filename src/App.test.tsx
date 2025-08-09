@@ -1,7 +1,7 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { rs, describe, it, expect } from "@rstest/core";
+import { rs, describe, it } from "@rstest/core";
 import App from "./App";
 
 rs.mock("ke2daira", () => import("../__mocks__/ke2daira"));
