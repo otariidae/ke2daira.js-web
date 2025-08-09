@@ -1,5 +1,6 @@
 import React from "react";
-import { render, cleanup, fireEvent, waitFor } from "@testing-library/react";
+import { render, cleanup, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import App from "./App";
 
 jest.mock("ke2daira");
@@ -16,29 +17,15 @@ describe("ke2daira", () => {
   });
 
   it("empty", async () => {
-    fireEvent.change($input, {
-      target: {
-        value: "",
-      },
-    });
-
     await waitFor(() => expect($output).toHaveTextContent(""));
   });
   it("松平健", async () => {
-    fireEvent.change($input, {
-      target: {
-        value: "松平 健",
-      },
-    });
+    await userEvent.type($input, "松平 健");
 
     await waitFor(() => expect($output).toHaveTextContent("ケツダイラ マン"));
   });
   it("草刈正雄", async () => {
-    fireEvent.change($input, {
-      target: {
-        value: "草刈 正雄",
-      },
-    });
+    await userEvent.type($input, "草刈 正雄");
 
     await waitFor(() => expect($output).toHaveTextContent("マサカリ クサオ"));
   });
