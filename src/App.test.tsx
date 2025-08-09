@@ -1,9 +1,10 @@
 import React from "react";
 import { render, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { rs, describe, it, expect, afterEach, beforeEach } from "@rstest/core";
 import App from "./App";
 
-jest.mock("ke2daira");
+rs.mock("ke2daira", () => import("../__mocks__/ke2daira"));
 
 afterEach(cleanup);
 
