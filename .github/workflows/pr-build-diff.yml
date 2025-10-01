@@ -69,14 +69,14 @@ jobs:
     steps:
       # Step 1: Download PR artifacts
       - name: Download PR artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: pr-artifacts
           path: ./pr-build
 
       # Step 2: Download main artifacts
       - name: Download main artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: main-artifacts
           path: ./main-build
