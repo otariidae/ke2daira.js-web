@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { rs, describe, it } from "@rstest/core";
 import App from "./App";
 
-rs.mock("ke2daira", () => import("../__mocks__/ke2daira"));
+rs.mock("ke2daira");
 
 describe("ke2daira", () => {
   it("松平健", async () => {
