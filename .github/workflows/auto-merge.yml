@@ -1,15 +1,18 @@
-name: Compare Build Artifacts
+name: Auto Merge
 
 on:
   pull_request:
     branches:
       - main
-    paths:
-      - package-lock.json
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   build-pr:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     outputs:
       artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }}
 
@@ -36,6 +39,7 @@ jobs:
 
   build-main:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     outputs:
       artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }}
 
@@ -86,8 +90,14 @@ jobs:
         run: |
           diff -rq ./pr-build ./main-build > diff-output.txt || true
 
-      # Step 4: Add job summary
-      - name: Add job summary
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+      # Step 4: Approve and enable auto-merge if no differences, otherwise add job summary
+      - name: Auto merge
         run: |
           if [ -s diff-output.txt ]; then
             echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
@@ -96,6 +106,9 @@ jobs:
             cat diff-output.txt >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           else
-            echo "### Diff Results" >> $GITHUB_STEP_SUMMARY
-            echo "No differences detected between PR and main build artifacts." >> $GITHUB_STEP_SUMMARY
+            gh pr review --approve "$PR_URL"
+            gh pr merge --auto --merge "$PR_URL"
           fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
