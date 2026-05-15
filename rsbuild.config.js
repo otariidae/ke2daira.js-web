@@ -1,8 +1,9 @@
 import { defineConfig, rspack } from "@rsbuild/core";
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill";
+import { pluginReact } from "@rsbuild/plugin-react";
 
 export default defineConfig({
-  plugins: [pluginNodePolyfill()],
+  plugins: [pluginReact(), pluginNodePolyfill()],
   output: {
     assetPrefix: "./",
   },
