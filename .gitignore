@@ -116,3 +116,8 @@ dist
 
 .idea
 dist
+
+# Playwright
+/playwright-report/
+/test-results/
+/blob-report/
