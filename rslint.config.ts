@@ -1,9 +1,10 @@
-import { defineConfig, reactPlugin, ts } from "@rslint/core";
+import { defineConfig, js, reactPlugin, ts } from "@rslint/core";
 
 export default defineConfig([
   {
     ignores: ["dist/**"],
   },
+  js.configs.recommended,
   ts.configs.recommended,
   reactPlugin.configs.recommended,
   {

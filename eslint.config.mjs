@@ -1,7 +1,7 @@
-const tseslint = require("typescript-eslint");
-const testingLibrary = require("eslint-plugin-testing-library");
+import tseslint from "typescript-eslint";
+import testingLibrary from "eslint-plugin-testing-library";
 
-module.exports = tseslint.config({
+export default tseslint.config({
   files: ["**/*.test.{ts,tsx}"],
   languageOptions: {
     parser: tseslint.parser,
