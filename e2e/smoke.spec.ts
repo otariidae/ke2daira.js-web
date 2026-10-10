@@ -1,7 +1,10 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@rstest/playwright";
 
 test.describe("production build (dist)", () => {
-  test("renders UI and does not throw uncaught JS errors", async ({ page }) => {
+  test("renders UI and does not throw uncaught JS errors", async ({
+    page,
+    serve,
+  }) => {
     const jsErrors: string[] = [];
     page.on("pageerror", (err) => {
       jsErrors.push(err.message);
@@ -12,7 +15,8 @@ test.describe("production build (dist)", () => {
       }
     });
 
-    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const { url } = await serve("./dist/index.html");
+    await page.goto(url, { waitUntil: "domcontentloaded" });
 
     await expect(
       page.getByRole("heading", { name: "ke2daira.js" }),
@@ -24,8 +28,10 @@ test.describe("production build (dist)", () => {
 
   test("converts a known name after kuromoji finishes loading", async ({
     page,
+    serve,
   }) => {
-    await page.goto("/", { waitUntil: "domcontentloaded" });
+    const { url } = await serve("./dist/index.html");
+    await page.goto(url, { waitUntil: "domcontentloaded" });
     await page.getByPlaceholder("例：松平 健").fill("松平 健");
     await expect(page.locator("output")).toContainText("ケツダイラ マン", {
       timeout: 60_000,
